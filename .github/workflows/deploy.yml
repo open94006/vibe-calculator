@@ -23,7 +23,7 @@ jobs:
           script: |
             set -e
 
-            cd ~/apps
+            cd ~/vibe-calcular
 
             git fetch origin
             git reset --hard origin/main

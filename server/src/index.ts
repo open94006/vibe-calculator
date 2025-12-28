@@ -8,6 +8,7 @@ const PORT = 5100;
 const allowedOrigins = new Set(
   [
     'http://localhost:5173',
+    'http://z-running.com',
     'https://z-running.com',
     process.env.CORS_ORIGIN,
   ].filter(Boolean)

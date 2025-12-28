@@ -1,3 +1,7 @@
 gcloud compute ssh --project="gen-lang-client-0017766570" --zone="asia-east1-a" "daniel-vibe-project"
 
 git clone https://github.com/open94006/vibe-calcular.git
+
+gcloud compute firewall-rules create allow-http \
+  --allow tcp:80,tcp:443 \
+  --target-tags http-server

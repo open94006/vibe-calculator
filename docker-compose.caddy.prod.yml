@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: my_server
+    restart: unless-stopped
+    environment:
+      # If you ever call the API cross-origin, allow the main site.
+      - CORS_ORIGIN=https://z-running.com
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: my_client
+    restart: unless-stopped
+    depends_on:
+      - server
+
+  caddy:
+    image: caddy:2
+    container_name: my_caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - client
+      - server
+
+volumes:
+  caddy_data:
+  caddy_config:
+

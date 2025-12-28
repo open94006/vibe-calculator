@@ -5,11 +5,24 @@ import productRoute from './routes/product.route';
 const app = express();
 const PORT = 5100;
 
-const corsOptions = {
-    origin: 'http://localhost:5173',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
+const allowedOrigins = new Set(
+  [
+    'http://localhost:5173',
+    'https://z-running.com',
+    process.env.CORS_ORIGIN,
+  ].filter(Boolean)
+);
+
+const corsOptions: cors.CorsOptions = {
+  origin: (origin, callback) => {
+    // Allow non-browser requests (no Origin header) like health checks / server-to-server.
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.has(origin)) return callback(null, true);
+    return callback(new Error(`CORS blocked for origin: ${origin}`));
+  },
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
 };
 
 app.use(cors(corsOptions));

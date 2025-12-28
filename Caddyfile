@@ -1,0 +1,14 @@
+z-running.com {
+  encode zstd gzip
+
+  # API -> Express
+  handle_path /api/* {
+    reverse_proxy server:5100
+  }
+
+  # Frontend -> Nginx (static SPA)
+  handle {
+    reverse_proxy client:80
+  }
+}
+

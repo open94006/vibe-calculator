@@ -9,7 +9,15 @@
     "install:server": "cd server && npm install",
     "install:all": "npm run install:client && npm run install:server"
   },
-  "keywords": ["typescript", "react", "express", "fullstack"],
+  "keywords": [
+    "typescript",
+    "react",
+    "express",
+    "fullstack"
+  ],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.2.3"
+  }
 }

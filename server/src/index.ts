@@ -1,13 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import productRoute from './routes/product.route';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
-
-// 新增簡單的健康檢查路徑與靜態檔案服務（選配，但建議檢查）
-import path from 'path';
-import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 

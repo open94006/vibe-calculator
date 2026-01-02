@@ -351,222 +351,36 @@ const BadmintonScoreboard: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center space-y-2 md:space-y-4 p-1 md:p-4 max-w-4xl mx-auto h-full overflow-hidden bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <div className="flex flex-col items-center space-y-1.5 md:space-y-4 p-1 md:p-4 max-w-4xl mx-auto h-full overflow-hidden bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       {/* 頂部控制欄 */}
-      <div className="w-full flex justify-between items-center bg-white dark:bg-gray-800 px-3 py-1.5 md:py-3 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 transition-colors">
+      <div className="w-full flex justify-between items-center bg-white dark:bg-gray-800 px-3 py-1 md:py-3 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 transition-colors">
         <div className="flex space-x-2 items-center">
           <button
             onClick={toggleMode}
-            className="flex items-center space-x-1 px-2 py-1 bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors text-xs md:text-base font-bold"
+            className="flex items-center space-x-1 px-1.5 py-0.5 md:px-2 md:py-1 bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors text-[10px] md:text-base font-bold"
           >
-            {isDoubles ? <Users size={16} /> : <User size={16} />}
+            {isDoubles ? <Users size={14} /> : <User size={14} />}
             <span>{isDoubles ? "雙打" : "單打"}</span>
           </button>
 
-          <div className="flex items-center space-x-2 ml-4 bg-gray-100 dark:bg-gray-700/50 px-2 py-1 rounded-md border border-transparent dark:border-gray-600">
-            <span className="text-xs md:text-sm font-bold text-gray-500 dark:text-gray-400">
+          <div className="flex items-center space-x-1.5 ml-2 md:ml-4 bg-gray-100 dark:bg-gray-700/50 px-1.5 py-0.5 rounded-md border border-transparent dark:border-gray-600">
+            <span className="text-[10px] md:text-sm font-bold text-gray-500 dark:text-gray-400">
               局數
             </span>
             <div className="flex items-center space-x-1">
-              <span className="text-red-600 dark:text-red-500 font-black text-sm md:text-lg">
+              <span className="text-red-600 dark:text-red-500 font-black text-xs md:text-lg">
                 {setsRed}
               </span>
-              <span className="text-gray-400 dark:text-gray-500 text-xs">
+              <span className="text-gray-400 dark:text-gray-500 text-[10px]">
                 -
               </span>
-              <span className="text-blue-600 dark:text-blue-500 font-black text-sm md:text-lg">
+              <span className="text-blue-600 dark:text-blue-500 font-black text-xs md:text-lg">
                 {setsBlue}
               </span>
             </div>
           </div>
         </div>
-        <div className="flex space-x-2">
-          <button
-            onClick={undo}
-            disabled={history.length === 0}
-            className="p-1.5 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg disabled:opacity-30 transition-colors"
-          >
-            <RotateCcw className="w-4 h-4 md:w-6 md:h-6" />
-          </button>
-          <button
-            onClick={() => setShowRules(true)}
-            className="p-1.5 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
-          >
-            <HelpCircle className="w-4 h-4 md:w-6 md:h-6" />
-          </button>
-        </div>
-      </div>
-
-      {/* 記分板區域 */}
-      <div className="grid grid-cols-2 gap-2 md:gap-4 w-full flex-1 min-h-0">
-        {/* 紅方 */}
-        <div
-          className={clsx(
-            "relative flex flex-col items-center justify-center p-2 md:p-6 rounded-xl md:rounded-3xl shadow-md md:shadow-xl transition-all duration-300 border-2 md:border-4 h-full",
-            servingTeam === "Red"
-              ? "border-red-500 bg-red-50 dark:bg-red-900/20"
-              : "border-transparent bg-white dark:bg-gray-800"
-          )}
-        >
-          {servingTeam === "Red" && (
-            <div className="absolute top-1 right-1 md:top-4 md:right-4 animate-bounce">
-              <span className="bg-red-500 dark:bg-red-600 text-white px-1 py-0.5 rounded-full text-[7px] md:text-xs font-bold shadow-sm">
-                發球
-              </span>
-            </div>
-          )}
-          <div className="flex items-center space-x-2 mb-1 md:mb-2 text-center">
-            <ShuttlecockIcon size={16} className="text-red-500 md:w-5 md:h-5" />
-            <h2 className="text-[10px] md:text-xl font-bold text-red-600 dark:text-red-400">
-              紅方 (A)
-            </h2>
-            {setsRed > 0 && (
-              <div className="flex space-x-0.5">
-                {[...Array(setsRed)].map((_, i) => (
-                  <Trophy
-                    key={i}
-                    className="w-3 h-3 md:w-5 md:h-5 text-yellow-500 dark:text-white fill-current"
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-
-          <div
-            onClick={() => updateScore("Red")}
-            className="text-6xl md:text-9xl font-black text-gray-800 dark:text-white cursor-pointer select-none active:scale-95 transition-transform leading-none"
-          >
-            {scoreRed}
-          </div>
-          <div className="mt-2 md:mt-6 grid grid-cols-2 gap-1 md:gap-3 w-full text-center">
-            <div
-              onClick={() => isDoubles && startEditing("Red", "left")}
-              className={clsx(
-                "p-1 md:p-2 rounded-md border transition-all duration-300",
-                isDoubles ? "cursor-pointer hover:border-red-300" : "",
-                isDoubles &&
-                  currentServer === positions.Red.left &&
-                  servingTeam === "Red"
-                  ? "bg-red-500 dark:bg-red-600 text-white border-red-500 dark:border-red-600 shadow-sm"
-                  : "bg-gray-100 dark:bg-gray-700/80 border-transparent dark:text-gray-300"
-              )}
-            >
-              <div className="text-[7px] md:text-xs opacity-70">左</div>
-              <div className="text-[10px] md:text-base font-bold truncate">
-                {isDoubles ? positions.Red.left : "A"}
-              </div>
-            </div>
-            <div
-              onClick={() => isDoubles && startEditing("Red", "right")}
-              className={clsx(
-                "p-1 md:p-2 rounded-md border transition-all duration-300",
-                isDoubles ? "cursor-pointer hover:border-red-300" : "",
-                isDoubles &&
-                  currentServer === positions.Red.right &&
-                  servingTeam === "Red"
-                  ? "bg-red-500 dark:bg-red-600 text-white border-red-500 dark:border-red-600 shadow-sm"
-                  : "bg-gray-100 dark:bg-gray-700/80 border-transparent dark:text-gray-300"
-              )}
-            >
-              <div className="text-[7px] md:text-xs opacity-70">右</div>
-              <div className="text-[10px] md:text-base font-bold truncate">
-                {isDoubles ? positions.Red.right : "A"}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* 藍方 */}
-        <div
-          className={clsx(
-            "relative flex flex-col items-center justify-center p-2 md:p-6 rounded-xl md:rounded-3xl shadow-md md:shadow-xl transition-all duration-300 border-2 md:border-4 h-full",
-            servingTeam === "Blue"
-              ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
-              : "border-transparent bg-white dark:bg-gray-800"
-          )}
-        >
-          {servingTeam === "Blue" && (
-            <div className="absolute top-1 right-1 md:top-4 md:right-4 animate-bounce">
-              <span className="bg-blue-500 dark:bg-blue-600 text-white px-1 py-0.5 rounded-full text-[7px] md:text-xs font-bold shadow-sm">
-                發球
-              </span>
-            </div>
-          )}
-          <div className="flex items-center space-x-2 mb-1 md:mb-2 text-center">
-            <ShuttlecockIcon
-              size={16}
-              className="text-blue-500 md:w-5 md:h-5"
-            />
-            <h2 className="text-[10px] md:text-xl font-bold text-blue-600 dark:text-blue-400">
-              藍方 (B)
-            </h2>
-            {setsBlue > 0 && (
-              <div className="flex space-x-0.5">
-                {[...Array(setsBlue)].map((_, i) => (
-                  <Trophy
-                    key={i}
-                    className="w-3 h-3 md:w-5 md:h-5 text-yellow-500 dark:text-white fill-current"
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-          <div
-            onClick={() => updateScore("Blue")}
-            className="text-6xl md:text-9xl font-black text-gray-800 dark:text-white cursor-pointer select-none active:scale-95 transition-transform leading-none"
-          >
-            {scoreBlue}
-          </div>
-          <div className="mt-2 md:mt-6 grid grid-cols-2 gap-1 md:gap-3 w-full text-center">
-            <div
-              onClick={() => isDoubles && startEditing("Blue", "left")}
-              className={clsx(
-                "p-1 md:p-2 rounded-md border transition-all duration-300",
-                isDoubles ? "cursor-pointer hover:border-blue-300" : "",
-                isDoubles &&
-                  currentServer === positions.Blue.left &&
-                  servingTeam === "Blue"
-                  ? "bg-blue-500 dark:bg-blue-600 text-white border-blue-500 dark:border-blue-600 shadow-sm"
-                  : "bg-gray-100 dark:bg-gray-700/80 border-transparent dark:text-gray-300"
-              )}
-            >
-              <div className="text-[7px] md:text-xs opacity-70">左</div>
-              <div className="text-[10px] md:text-base font-bold truncate">
-                {isDoubles ? positions.Blue.left : "B"}
-              </div>
-            </div>
-            <div
-              onClick={() => isDoubles && startEditing("Blue", "right")}
-              className={clsx(
-                "p-1 md:p-2 rounded-md border transition-all duration-300",
-                isDoubles ? "cursor-pointer hover:border-blue-300" : "",
-                isDoubles &&
-                  currentServer === positions.Blue.right &&
-                  servingTeam === "Blue"
-                  ? "bg-blue-500 dark:bg-blue-600 text-white border-blue-500 dark:border-blue-600 shadow-sm"
-                  : "bg-gray-100 dark:bg-gray-700/80 border-transparent dark:text-gray-300"
-              )}
-            >
-              <div className="text-[7px] md:text-xs opacity-70">右</div>
-              <div className="text-[10px] md:text-base font-bold truncate">
-                {isDoubles ? positions.Blue.right : "B"}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* 狀態提示 */}
-      <div className="w-full bg-yellow-50 dark:bg-yellow-500/10 border border-yellow-200 dark:border-yellow-500/30 px-3 py-1.5 rounded-lg text-center transition-colors">
-        <p className="text-yellow-800 dark:text-white font-bold text-[10px] md:text-sm">
-          發球：
-          <span className="text-blue-600 dark:text-blue-400">
-            {currentServer}
-          </span>
-          <span className="mx-1">
-            ({getServerPosition(servingTeam === "Red" ? scoreRed : scoreBlue)}
-            側)
-          </span>
+        <div className="flex space-x-1.5">
           <button
             onClick={() => {
               showConfirm({
@@ -577,9 +391,195 @@ const BadmintonScoreboard: React.FC = () => {
                 onConfirm: fullReset,
               });
             }}
-            className="ml-4 text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-400 transition-colors underline font-bold"
+            className="p-1 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
           >
-            重置
+            <RotateCcw className="w-3.5 h-3.5 md:w-6 md:h-6" />
+          </button>
+          <button
+            onClick={() => setShowRules(true)}
+            className="p-1 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+          >
+            <HelpCircle className="w-3.5 h-3.5 md:w-6 md:h-6" />
+          </button>
+        </div>
+      </div>
+
+      {/* 記分板區域 */}
+      <div className="grid grid-cols-2 gap-1.5 md:gap-4 w-full flex-1 min-h-0">
+        {/* 紅方 */}
+        <div
+          className={clsx(
+            "relative flex flex-col items-center justify-center p-1 md:p-4 rounded-lg md:rounded-3xl shadow-sm md:shadow-xl transition-all duration-300 border md:border-4 h-full",
+            servingTeam === "Red"
+              ? "border-red-500 bg-red-50 dark:bg-red-900/20"
+              : "border-transparent bg-white dark:bg-gray-800"
+          )}
+        >
+          {servingTeam === "Red" && (
+            <div className="absolute top-0.5 right-0.5 md:top-4 md:right-4 animate-bounce">
+              <span className="bg-red-500 dark:bg-red-600 text-white px-1 py-0.5 rounded-full text-[6px] md:text-xs font-bold shadow-sm">
+                發球
+              </span>
+            </div>
+          )}
+          <div className="flex items-center space-x-1 mb-0.5 md:mb-2 text-center">
+            <ShuttlecockIcon size={12} className="text-red-500 md:w-5 md:h-5" />
+            <h2 className="text-[9px] md:text-xl font-bold text-red-600 dark:text-red-400">
+              紅方 (A)
+            </h2>
+            {setsRed > 0 && (
+              <div className="flex space-x-0.5">
+                {[...Array(setsRed)].map((_, i) => (
+                  <Trophy
+                    key={i}
+                    className="w-2.5 h-2.5 md:w-5 md:h-5 text-yellow-500 dark:text-white fill-current"
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div
+            onClick={() => updateScore("Red")}
+            className="text-4xl md:text-8xl font-black text-gray-800 dark:text-white cursor-pointer select-none active:scale-95 transition-transform leading-none"
+          >
+            {scoreRed}
+          </div>
+          <div className="mt-1.5 md:mt-6 grid grid-cols-2 gap-1 md:gap-3 w-full text-center px-1">
+            <div
+              onClick={() => isDoubles && startEditing("Red", "left")}
+              className={clsx(
+                "p-0.5 md:p-2 rounded border transition-all duration-300",
+                isDoubles ? "cursor-pointer hover:border-red-300" : "",
+                isDoubles &&
+                  currentServer === positions.Red.left &&
+                  servingTeam === "Red"
+                  ? "bg-red-500 dark:bg-red-600 text-white border-red-500 dark:border-red-600 shadow-sm"
+                  : "bg-gray-100 dark:bg-gray-700/80 border-transparent dark:text-gray-300"
+              )}
+            >
+              <div className="text-[6px] md:text-xs opacity-70">左</div>
+              <div className="text-[8px] md:text-base font-bold truncate">
+                {isDoubles ? positions.Red.left : "A"}
+              </div>
+            </div>
+            <div
+              onClick={() => isDoubles && startEditing("Red", "right")}
+              className={clsx(
+                "p-0.5 md:p-2 rounded border transition-all duration-300",
+                isDoubles ? "cursor-pointer hover:border-red-300" : "",
+                isDoubles &&
+                  currentServer === positions.Red.right &&
+                  servingTeam === "Red"
+                  ? "bg-red-500 dark:bg-red-600 text-white border-red-500 dark:border-red-600 shadow-sm"
+                  : "bg-gray-100 dark:bg-gray-700/80 border-transparent dark:text-gray-300"
+              )}
+            >
+              <div className="text-[6px] md:text-xs opacity-70">右</div>
+              <div className="text-[8px] md:text-base font-bold truncate">
+                {isDoubles ? positions.Red.right : "A"}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 藍方 */}
+        <div
+          className={clsx(
+            "relative flex flex-col items-center justify-center p-1 md:p-4 rounded-lg md:rounded-3xl shadow-sm md:shadow-xl transition-all duration-300 border md:border-4 h-full",
+            servingTeam === "Blue"
+              ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+              : "border-transparent bg-white dark:bg-gray-800"
+          )}
+        >
+          {servingTeam === "Blue" && (
+            <div className="absolute top-0.5 right-0.5 md:top-4 md:right-4 animate-bounce">
+              <span className="bg-blue-500 dark:bg-blue-600 text-white px-1 py-0.5 rounded-full text-[6px] md:text-xs font-bold shadow-sm">
+                發球
+              </span>
+            </div>
+          )}
+          <div className="flex items-center space-x-1 mb-0.5 md:mb-2 text-center">
+            <ShuttlecockIcon
+              size={12}
+              className="text-blue-500 md:w-5 md:h-5"
+            />
+            <h2 className="text-[9px] md:text-xl font-bold text-blue-600 dark:text-blue-400">
+              藍方 (B)
+            </h2>
+            {setsBlue > 0 && (
+              <div className="flex space-x-0.5">
+                {[...Array(setsBlue)].map((_, i) => (
+                  <Trophy
+                    key={i}
+                    className="w-2.5 h-2.5 md:w-5 md:h-5 text-yellow-500 dark:text-white fill-current"
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+          <div
+            onClick={() => updateScore("Blue")}
+            className="text-4xl md:text-8xl font-black text-gray-800 dark:text-white cursor-pointer select-none active:scale-95 transition-transform leading-none"
+          >
+            {scoreBlue}
+          </div>
+          <div className="mt-1.5 md:mt-6 grid grid-cols-2 gap-1 md:gap-3 w-full text-center px-1">
+            <div
+              onClick={() => isDoubles && startEditing("Blue", "left")}
+              className={clsx(
+                "p-0.5 md:p-2 rounded border transition-all duration-300",
+                isDoubles ? "cursor-pointer hover:border-blue-300" : "",
+                isDoubles &&
+                  currentServer === positions.Blue.left &&
+                  servingTeam === "Blue"
+                  ? "bg-blue-500 dark:bg-blue-600 text-white border-blue-500 dark:border-blue-600 shadow-sm"
+                  : "bg-gray-100 dark:bg-gray-700/80 border-transparent dark:text-gray-300"
+              )}
+            >
+              <div className="text-[6px] md:text-xs opacity-70">左</div>
+              <div className="text-[8px] md:text-base font-bold truncate">
+                {isDoubles ? positions.Blue.left : "B"}
+              </div>
+            </div>
+            <div
+              onClick={() => isDoubles && startEditing("Blue", "right")}
+              className={clsx(
+                "p-0.5 md:p-2 rounded border transition-all duration-300",
+                isDoubles ? "cursor-pointer hover:border-blue-300" : "",
+                isDoubles &&
+                  currentServer === positions.Blue.right &&
+                  servingTeam === "Blue"
+                  ? "bg-blue-500 dark:bg-blue-600 text-white border-blue-500 dark:border-blue-600 shadow-sm"
+                  : "bg-gray-100 dark:bg-gray-700/80 border-transparent dark:text-gray-300"
+              )}
+            >
+              <div className="text-[6px] md:text-xs opacity-70">右</div>
+              <div className="text-[8px] md:text-base font-bold truncate">
+                {isDoubles ? positions.Blue.right : "B"}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 狀態提示 */}
+      <div className="w-full bg-yellow-50 dark:bg-yellow-500/10 border border-yellow-200 dark:border-yellow-500/30 px-3 py-0.5 rounded-lg text-center transition-colors">
+        <p className="text-yellow-800 dark:text-white font-bold text-[9px] md:text-sm">
+          發球：
+          <span className="text-blue-600 dark:text-blue-400">
+            {currentServer}
+          </span>
+          <span className="mx-1">
+            ({getServerPosition(servingTeam === "Red" ? scoreRed : scoreBlue)}
+            側)
+          </span>
+          <button
+            onClick={undo}
+            disabled={history.length === 0}
+            className="ml-2 md:ml-4 text-gray-400 dark:text-gray-500 hover:text-blue-500 dark:hover:text-blue-400 disabled:opacity-30 transition-colors underline font-bold"
+          >
+            上一步
           </button>
         </p>
       </div>

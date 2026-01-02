@@ -214,13 +214,13 @@ const AppLayout: React.FC = () => {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        <header className="bg-white dark:bg-gray-800 shadow-sm z-10 h-16 flex items-center justify-between px-4 md:px-6 border-b border-gray-200 dark:border-gray-700 sticky top-0 transition-colors duration-300">
+        <header className="bg-white dark:bg-gray-800 shadow-sm z-10 h-12 md:h-16 flex items-center justify-between px-4 md:px-6 border-b border-gray-200 dark:border-gray-700 sticky top-0 transition-colors duration-300">
           <div className="flex items-center">
             <button
               onClick={toggleSidebar}
-              className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-0 mr-4 text-gray-600 dark:text-gray-300 md:hidden"
+              className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-0 mr-2 md:mr-4 text-gray-600 dark:text-gray-300 md:hidden"
             >
-              <Menu size={24} />
+              <Menu size={20} />
             </button>
             <button
               onClick={toggleDesktopSidebar}
@@ -228,7 +228,7 @@ const AppLayout: React.FC = () => {
             >
               <Menu size={24} />
             </button>
-            <h1 className="text-xl font-semibold text-gray-800 dark:!text-white truncate">
+            <h1 className="text-base md:text-xl font-semibold text-gray-800 dark:!text-white truncate">
               {NAV_ITEMS.find((item) => item.path === location.pathname)
                 ?.name || "Dashboard"}
             </h1>

@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, Request, Get } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Request, Get, Inject, forwardRef } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service.js';
 import { RegisterDto } from './dto/register.dto.js';
@@ -8,7 +8,7 @@ import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagg
 @ApiTags('auth')
 @Controller('api/auth')
 export class AuthController {
-    constructor(private authService: AuthService) {}
+    constructor(@Inject(forwardRef(() => AuthService)) private readonly authService: AuthService) {}
 
     @Post('register')
     @ApiOperation({ summary: 'Register a new user' })

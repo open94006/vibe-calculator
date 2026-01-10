@@ -1,13 +1,17 @@
-import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
+import { Injectable, ConflictException, Inject, forwardRef } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service.js';
 import * as bcrypt from 'bcrypt';
 import { RegisterDto } from './dto/register.dto.js';
-import { LoginDto } from './dto/login.dto.js';
 
 @Injectable()
 export class AuthService {
-    constructor(private usersService: UsersService, private jwtService: JwtService) {}
+    constructor(
+        @Inject(forwardRef(() => UsersService))
+        private usersService: UsersService,
+        @Inject(JwtService)
+        private jwtService: JwtService
+    ) {}
 
     async register(registerDto: RegisterDto) {
         const { email, password, name } = registerDto;
